@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
-import Offer from 'components/offer/Offer';
+import OfferList from 'components/offer/OfferList';
 
 import Csgo1Banner from 'img/csgo1-banner.jpg';
 import Csgo2Banner from 'img/csgo2-banner.jpg';
@@ -48,14 +48,7 @@ class Home extends Component {
                         </button>
                     </form>
                 </div>
-                <div className="offers-container">
-                    <Offer />
-                    <Offer />
-                    <Offer />
-                    <Offer />
-                    <Offer />
-                    <Offer />
-                </div>
+                <OfferList />
                 <Footer />
             </div>
         );

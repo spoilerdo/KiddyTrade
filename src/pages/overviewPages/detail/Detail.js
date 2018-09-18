@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
+
 import '../OverviewStyle.css';
 import skin from 'img/ak47.png';
 
 class Detail extends Component {
     render() {
+        if(!this.props.item){
+            //TODO: maybe return to the previous page??
+            return <div>No item selected</div>;
+        }
+        
         return(
             <div>
                 <Header/>
@@ -15,7 +23,7 @@ class Detail extends Component {
                         <div className="item-information-container">
                             <h2>Skin information:</h2>
                             <div className="information">
-                                <p>INFORMATION ABOUT THE SKIN LOL</p>
+                                <p>{this.props.item.title}</p>
                             </div>
                         </div>
                     </div>
@@ -38,4 +46,10 @@ class Detail extends Component {
     }
 }
 
-export default Detail;
+function mapStateToProps(state) {
+    return {
+        item: state.activeItem
+    };
+}
+
+export default connect(mapStateToProps)(Detail);
