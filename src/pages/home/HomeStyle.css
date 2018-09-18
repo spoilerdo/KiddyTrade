@@ -1,0 +1,65 @@
+.banner {
+    height: 60%;
+}
+.search-container {
+    padding: 75px;
+}
+.search-container > form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50vw;
+}
+.search-container > form > input {
+    width: 40vw !important;
+    margin-right: 5px;
+    margin-left: auto;
+    background-color: transparent;
+}
+.search-container > form > input::-moz-placeholder{
+    color: #747474;
+}
+.search-container > form > input::placeholder{
+    color: #747474;
+}
+.search-container > form > input:focus {
+    background-color: transparent;
+    border-color: #FF652F;
+    outline: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    color: #FCFCFC;
+}
+.search-container > form > button {
+    background-color: transparent;
+}
+.search-container > form > button:active {
+    outline: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.search-container > form > button:hover i {
+    color: #747474;
+}
+.search-btn {
+    vertical-align: middle;
+    color: #FCFCFC;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-property: color;
+    -webkit-transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    transition-property: color;
+    transition-timing-function: ease-out;
+}
+.offers-container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 325px);
+    grid-template-rows: repeat(auto-fill, 300px);
+    grid-gap: 11ch;
+    justify-content: center;
+}

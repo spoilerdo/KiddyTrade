@@ -1,0 +1,18 @@
+.notification-container {
+    padding: 50px;
+    height: 37vh;
+    overflow-y: auto;
+}
+.notification {
+    background-color: #FCFCFC;
+}
+.notification > p {
+    color: #0A0A0A;
+}
+.inventory {
+    background-color: #0A0A0A;
+    height: 70vh;
+}
+.inventory > h2 {
+    padding: 10px;
+}

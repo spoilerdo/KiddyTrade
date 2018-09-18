@@ -1,0 +1,11 @@
+.footer {
+    width: 100%;
+    padding: 20px;
+    background-color:#0A0A0A;
+}
+.footer p, h4 {
+    color: #FCFCFC;
+}
+.logo {
+    max-width: 70px;
+}

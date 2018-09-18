@@ -1,0 +1,70 @@
+.logo {
+    max-width: 70px;
+}
+.dark-nav {
+    background-color: #0A0A0A;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.dark-nav .nav-link {
+    color: #747474;
+}
+.dark-nav a {
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: color;
+    -webkit-transition-timing-function: ease-out;
+    transition-duration: 0.3s;
+    transition-property: color;
+    transition-timing-function: ease-out;
+}
+.dark-nav a:hover {
+    color: #FCFCFC;
+}
+/*Copyright to ianlunn*/
+/*URL: https://github.com/IanLunn/Hover*/
+
+.hvr-underline-from-center {
+    -webkit-transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    transform: perspective(1px) translateZ(0);
+    vertical-align: middle;
+}
+
+.hvr-underline-from-center:before {
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: left, right;
+    -webkit-transition-timing-function: ease-out;
+    background: #fff;
+    bottom: 0;
+    bottom: 5px;
+    content: "";
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    right: 50%;
+    transition-duration: 0.3s;
+    transition-property: left, right;
+    transition-timing-function: ease-out;
+    z-index: -1;
+}
+
+.hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
+    left: 0;
+    right: 0;
+}
+
+.hvr-underline-from-center-selected { color: #333 !important; }
+
+.hvr-underline-from-center-selected:before {
+    background: #fff;
+    bottom: 0;
+    bottom: 10px;
+    content: "";
+    height: 1.5px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}

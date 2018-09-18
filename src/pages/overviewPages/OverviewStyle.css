@@ -1,0 +1,42 @@
+.detail-container {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 70vh;
+}
+.item-detail-container > img {
+    width: 100%;
+}
+.item-detail-container {
+    /*padding: 50px 50px 0 50px;*/
+}
+.item-information-container {
+    background-color: #0A0A0A;
+    height: 35vh;
+    margin-top: 25px;
+}
+.item-information-container > h2 {
+    background-color: #FCFCFC;
+    color: #0A0A0A;
+    text-align: center;
+}
+.price-detail-container {
+    margin: 0 50px 50px 50px;
+    background-color: #0A0A0A;
+    height: 80%;
+    padding-top: 50px;
+}
+.price-detail-container > h2 {
+    background-color: #FCFCFC;
+    color: #0A0A0A;
+    text-align: center;
+}
+.information {
+    padding: 20px 0 0 20px; 
+}
+.sell-container {
+    float: right;
+	margin: 50px;
+}
+.sell-container > button {
+	margin-right: 10px;
+}
