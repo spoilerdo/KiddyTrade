@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+/*import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {selectItem} from '../../actions/detail';
 import {bindActionCreators} from 'redux';
@@ -32,4 +32,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ selectItem: selectItem }, dispatch);
 }
 
-export default connect(mapDispatchToProps)(Offer);
+export default connect(mapDispatchToProps)(Offer);*/

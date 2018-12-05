@@ -1,18 +1,31 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
+
+import { getOffer } from '../../../modules/offer';
 
 import '../OverviewStyle.css';
 import skin from 'img/ak47.png';
 
 class Detail extends Component {
+    componentWillMount(){
+        this.props.getOffer(this.props.match.params.ID);
+    }
+
     render() {
-        if(!this.props.item){
-            //TODO: maybe return to the previous page??
-            return <div>No item selected</div>;
+        const { offers, items, user } = this.props;
+
+        if(Object.keys(offers).length === 0 && Object.keys(items).length === 0){
+            return <h2>No item selected</h2>;
         }
+
+        console.log(offers);
+        console.log(items);
+
+        const offer = offers[this.props.match.params.ID];
+        const item = items[offer.itemId];
         
         return(
             <div>
@@ -23,7 +36,10 @@ class Detail extends Component {
                         <div className="item-information-container">
                             <h2>Skin information:</h2>
                             <div className="information">
-                                <p>{this.props.item.title}</p>
+                                <p>{offer.offerName}</p>
+                                <br/><br/>
+                                <p>{item.description}</p>
+                                <p>condition: {item.condition}</p>
                             </div>
                         </div>
                     </div>
@@ -31,12 +47,14 @@ class Detail extends Component {
                         <div className="price-detail-container">
                             <h2>Price details:</h2>
                             <div className="information">
-                                <p>lowest price: $35,-</p>
-                                <p>highest price: $135,-</p>
+                                <p>price: ${offer.price}</p>
+                                <p>{offer.sold ? 'sold' : 'not sold yet'}</p>
                             </div>
-                            <div className="sell-container">
-                                <button className="btn btn-lg" type="submit">Sell this skin</button>
-                            </div>
+                            {user.isAuthenticated === true &&
+                                <div className="sell-container">
+                                    <button className="btn btn-lg" type="submit">Sell this skin</button>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -46,10 +64,17 @@ class Detail extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        item: state.activeItem
-    };
-}
+const mapStateToProps = state => {
+    console.log(state);
 
-export default connect(mapStateToProps)(Detail);
+    return { 
+        offers: state.offersItems.offers,
+        items: state.offersItems.items,
+        user: state.auth,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    { getOffer }
+)(Detail);

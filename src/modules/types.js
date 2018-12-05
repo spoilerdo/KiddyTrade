@@ -1,0 +1,10 @@
+export const LOGIN = 'LOGIN';
+export const ADMIN = 'ADMIN';
+export const GET_ALL_OFFERS = 'GET_ALL_OFFERS';
+export const GET_OFFER = "GET_OFFER";
+export const BANKSERVER = 'http://localhost:8888';
+export const INVENTORYSERVER = 'http://localhost:8881';
+export const MARKETSERVER = 'http://localhost:8882';
+export const OFFER = '/offer';
+export const DASHBOARD_ROUTE = '/dashboard';
+export const LOGIN_ROUTE = '/';

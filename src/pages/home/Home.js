@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
 import OfferList from 'components/offer/OfferList';
+
+import { getOffers } from '../../modules/offer';
 
 import Csgo1Banner from 'img/csgo1-banner.jpg';
 import Csgo2Banner from 'img/csgo2-banner.jpg';
@@ -10,6 +13,10 @@ import Csgo3Banner from 'img/csgo3-banner.jpg';
 import './HomeStyle.css';
 
 class Home extends Component {
+    componentDidMount(){
+        this.props.getOffers();
+    }
+
     render() {
         return(
             <div>
@@ -48,11 +55,20 @@ class Home extends Component {
                         </button>
                     </form>
                 </div>
-                <OfferList />
+                <OfferList offers={this.props.offers}/>
                 <Footer />
             </div>
         );
     }
 }
 
-export default Home;
+const mapStateToProps = state => {
+    console.log(state);
+
+    return { offers: state.offersItems.offers };
+};
+
+export default connect(
+    mapStateToProps,
+    { getOffers }
+)(Home);

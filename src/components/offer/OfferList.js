@@ -1,29 +1,36 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {selectItem} from '../../actions/detail';
-import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
+import _ from 'lodash';
 
 import './OfferStyle.css';
 import skin from 'img/ak47.png';
 
-class ItemList extends Component {
+class OfferList extends Component {
     renderList() {
-        return this.props.items.map(item => {
+        const {offers} = this.props;
+
+        console.log(offers);
+
+        if(Object.keys(offers).length === 0){
+            return <h2>No item found</h2>;
+        }
+
+        return _.map(offers, offer => {
             return (
                 <div 
-                    key={item.title}
-                    onClick={() => this.props.selectItem(item)}
+                    key={offer.offerId}
                     className="offer-container"
                 >
                     <div className="skin-image-container">
                         <img src={skin} />
                     </div>
-                    <div className="skin-title-container">
-                        <h3>{item.title}</h3>
-                        <p>prijs: $10,50</p>
-                        <Link to={`/Detail/${item.id}`}>more info</Link>
-                    </div>
+                    <Link to={`/detail/${offer.offerId}`}>
+                        <div className="skin-title-container">
+                            <h3>{offer.offerName}</h3>
+                            <p>BUY IT FOR: ${offer.price}</p>
+                        </div>
+                    </Link>
                 </div>
             );
         });
@@ -38,14 +45,6 @@ class ItemList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        items: state.items
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ selectItem: selectItem }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export default connect(
+    null,
+)(OfferList);

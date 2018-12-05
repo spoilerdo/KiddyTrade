@@ -12,7 +12,7 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="#">Kiddy-Trades <span className="sr-only">(current)</span></a>
+                  <Link className="nav-link" to={'/'}>Kiddy-Trades <span className="sr-only">(current)</span></Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/Account" className="nav-link hvr-underline-from-center">Login</Link>
