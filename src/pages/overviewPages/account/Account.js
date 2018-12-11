@@ -1,13 +1,39 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+
+import { getOffersFromAccount } from '../../../modules/offer';
+import { unregister } from '../../../modules/auth';
+
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
-import Offer from 'components/offer/Offer';
+import OfferList from 'components/offer/OfferList';
+import NotificationList from 'components/notification/NotificationList';
+
 import '../OverviewStyle.css';
 import './AccountStyle.css';
-import skin from 'img/ak47.png';
 
 class Account extends Component {
+    componentDidMount(){
+        this.props.getOffersFromAccount(this.props.user.userId);
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        const p = this.props;
+        p.unregister(p.user.userId).then(() => {
+            p.history.push("/");
+        })
+        .catch(() => {
+            return;
+        })
+    };
+
     render() {
+        const { ownedOffers, offers, user } = this.props;
+
+        if(Object.keys(offers).length === 0 && Object.keys(ownedOffers).length === 0){
+            return <h2>No item selected</h2>;
+        }
         return(
             <div>
                 <Header/>
@@ -17,6 +43,8 @@ class Account extends Component {
                             <h2>Account information:</h2>
                            <div className="information">
                                 <p>INFOMATION ABOUT THE USER LOL</p>
+                                <p>{user.user}</p>
+                                <button className="btn btn-lg" onSubmit={this.handleSubmit}>Delete account</button>
                            </div>
                         </div>
                     </div>
@@ -24,26 +52,7 @@ class Account extends Component {
                         <div className="price-detail-container">
                             <h2>Notifications:</h2>
                             <div className="information notification-container">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start notification">
-                                        <div class="d-flex w-100 justify-content-between">
-                                        <small>3 days ago</small>
-                                        </div>
-                                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
-                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start notification">
-                                        <div class="d-flex w-100 justify-content-between">
-                                        <small class="text-muted">3 days ago</small>
-                                        </div>
-                                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
-                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start notification">
-                                        <div class="d-flex w-100 justify-content-between">
-                                        <small class="text-muted">3 days ago</small>
-                                        </div>
-                                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
-                                </div>
+                                <NotificationList/>
                             </div>
                         </div>
                     </div>
@@ -51,8 +60,7 @@ class Account extends Component {
                 <div className="container-fluid inventory">
                         <h2>Inventory:</h2>
                         <div className="offers-container">
-                            <Offer/>
-                            <Offer/>
+                            <OfferList offers={ownedOffers}/>
                         </div>
                     </div>
                 <Footer/>
@@ -61,4 +69,17 @@ class Account extends Component {
     }
 }
 
-export default Account;
+const mapStateToProps = state => {
+    console.log(state);
+
+    return { 
+        ownedOffers: state.offersItems.ownedOffers,
+        offers: state.offersItems.offers,
+        user: state.auth,
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    { getOffersFromAccount, unregister }
+)(Account);

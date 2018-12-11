@@ -21,9 +21,6 @@ class Detail extends Component {
             return <h2>No item selected</h2>;
         }
 
-        console.log(offers);
-        console.log(items);
-
         const offer = offers[this.props.match.params.ID];
         const item = items[offer.itemId];
         
@@ -65,8 +62,6 @@ class Detail extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
-
     return { 
         offers: state.offersItems.offers,
         items: state.offersItems.items,

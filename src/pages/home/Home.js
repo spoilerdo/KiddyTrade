@@ -63,8 +63,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
-
     return { offers: state.offersItems.offers };
 };
 

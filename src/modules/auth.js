@@ -1,8 +1,8 @@
 import {setTokenHeader} from '../services/api';
 import { apiCall } from '../services/api';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
-import {BANKSERVER, LOGIN, ADMIN} from './types';
+import {MARKETSERVER, LOGIN, REGISTER, UNREGISTER, ACCOUNT } from './types';
 
 //Actions
 export const setAuthorizationToken = (token) => {
@@ -10,33 +10,55 @@ export const setAuthorizationToken = (token) => {
 }
 
 export const logout = () => {
-    console.log("LOGOUT");
     localStorage.clear();
     setAuthorizationToken(false); //clears the axios default headers fot auth
+}
+
+export const register = (accountData) => {
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            return apiCall('post', `${MARKETSERVER}${ACCOUNT}`, accountData)
+                .then((req) => {
+                    dispatch({
+                        type: REGISTER,
+                        payload: req,
+                    })
+                    resolve();
+                })
+                .catch(e => {reject();})
+        });
+    }
+}
+
+export const unregister = (accountId) => {
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            return apiCall('delete', `${MARKETSERVER}${ACCOUNT}/${accountId}`)
+                .then(() => {
+                    this.logout();
+                    resolve();
+                })
+                .catch(e => {reject();});
+        });
+    }
 }
 
 export const login = (userData) => {
     return dispatch => {
         //wrap the thunk in a promise so we can wait for the API call
         return new Promise((resolve, reject) => {
-            return apiCall('post', `${BANKSERVER}/login`, userData)
+            return apiCall('post', `${MARKETSERVER}/login`, userData)
                 .then((req) => {
-                    var decoded = jwt_decode(req.token);
-                    decoded.scopes.forEach(scope => {
-                        if(scope == ADMIN){
-                            localStorage.setItem('jwtToken', req.token);
-                            setAuthorizationToken(req.token);
-                            dispatch({
-                                type: LOGIN,
-                                payload: userData.username
-                            })
-                            resolve(); //API call succeeded
-                        }
-                    });
+                    localStorage.setItem('jwtToken', req.token);
+                    setAuthorizationToken(req.token);
+
+                    dispatch({
+                        type: LOGIN,
+                        payload: userData.username
+                    })
+                    resolve(); //API call succeeded
                 })
-                .catch(e => {
-                    reject(); //fail!
-                })
+                .catch(e => { reject(); })
         });
     }
 }
@@ -45,6 +67,7 @@ export const login = (userData) => {
 const DEFAULT_STATE = {
     isAuthenticated: false,
     user: "",
+    userId: "",
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -53,6 +76,7 @@ export default (state = DEFAULT_STATE, action) => {
             return {
                 isAuthenticated: !!Object.keys(action.payload).length,
                 user: action.payload,
+                userId: jwtDecode(localStorage.jwtToken)["userID"],
             };
         default:
             return state;
