@@ -11,11 +11,11 @@ class Header extends Component {
 
   handleLogout = e => {
     e.preventDefault();
-    this.props.logout();
+    logout();
+    this.props.history.push('/login');
   }
 
   render() {
-      console.log(this.props);
       return (
       <nav className="navbar navbar-expand-lg dark-nav">
           <a className="navbar-brand" href="#"><img src={Logo} className='logo'/></a>

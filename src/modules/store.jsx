@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 
 import authReducer from './auth';
 import offerReducer from './offer';
+import inventoryReducer from './inventory';
 import notificationReducer from './notification';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    offersItems: offerReducer,
+    offers: offerReducer,
+    inventory: inventoryReducer,
     notifications: notificationReducer,
 });
 

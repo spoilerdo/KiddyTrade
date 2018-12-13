@@ -5,7 +5,7 @@ import jwtDecode from 'jwt-decode';
 import _ from 'lodash';
 import moment from 'moment';
 
-import { getNewNotifications } from '../../modules/notification';
+import { getNewNotifications, updateNotification } from '../../modules/notification';
 
 import './NotificationStyle.css';
 
@@ -14,6 +14,11 @@ class NotificationList extends Component {
     componentDidMount(){
         const userId = jwtDecode(localStorage.jwtToken)["userID"];
         this.props.getNewNotifications(userId);
+    }
+
+    handleClick = e => {
+        const userId = jwtDecode(localStorage.jwtToken)["userID"];
+        this.props.updateNotification(userId).catch(() => {return;})
     }
 
     renderList(){
@@ -39,6 +44,7 @@ class NotificationList extends Component {
         return(
             <div className="list-group">
                 {this.renderList()}
+                <button className="btn btn-lg btn-block" onClick={this.handleClick}>Clear</button> 
             </div>
         );
     }
@@ -52,5 +58,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getNewNotifications }
+    { getNewNotifications, updateNotification }
 )(NotificationList);

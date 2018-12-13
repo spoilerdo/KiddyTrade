@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
-import OfferList from 'components/offer/OfferList';
+import OfferList from 'components/lists/OfferList';
 
 import { getOffers } from '../../modules/offer';
 
@@ -63,7 +63,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-    return { offers: state.offersItems.offers };
+    return { offers: state.offers.offers };
 };
 
 export default connect(

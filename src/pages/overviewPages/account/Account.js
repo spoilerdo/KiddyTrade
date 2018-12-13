@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
-import { getOffersFromAccount } from '../../../modules/offer';
+import { getOffersFromAccount, getItemsFromAccount } from '../../../modules/inventory';
 import { unregister } from '../../../modules/auth';
 
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
-import OfferList from 'components/offer/OfferList';
+import OfferList from 'components/lists/OfferList';
+import ItemList from 'components/lists/ItemList';
 import NotificationList from 'components/notification/NotificationList';
 
 import '../OverviewStyle.css';
@@ -15,6 +16,7 @@ import './AccountStyle.css';
 class Account extends Component {
     componentDidMount(){
         this.props.getOffersFromAccount(this.props.user.userId);
+        this.props.getItemsFromAccount(this.props.user.userId);
     }
 
     handleSubmit = e => {
@@ -29,11 +31,8 @@ class Account extends Component {
     };
 
     render() {
-        const { ownedOffers, offers, user } = this.props;
+        const { ownedOffers, user } = this.props;
 
-        if(Object.keys(offers).length === 0 && Object.keys(ownedOffers).length === 0){
-            return <h2>No item selected</h2>;
-        }
         return(
             <div>
                 <Header/>
@@ -58,11 +57,13 @@ class Account extends Component {
                     </div>
                 </div>
                 <div className="container-fluid inventory">
-                        <h2>Inventory:</h2>
-                        <div className="offers-container">
-                            <OfferList offers={ownedOffers}/>
-                        </div>
-                    </div>
+                    <h2>Inventory:</h2>
+                    <ItemList/>
+                </div>
+                <div className="container-fluid inventory">
+                    <h2>Offers that aren't sold:</h2>
+                    <OfferList offers={ownedOffers}/>
+                </div>
                 <Footer/>
             </div>
         );
@@ -73,13 +74,13 @@ const mapStateToProps = state => {
     console.log(state);
 
     return { 
-        ownedOffers: state.offersItems.ownedOffers,
-        offers: state.offersItems.offers,
+        ownedOffers: state.inventory.ownedOffers,
         user: state.auth,
+        ownedItems: state.inventory.ownedItems,
     };
 }
 
 export default connect(
     mapStateToProps,
-    { getOffersFromAccount, unregister }
+    { getOffersFromAccount, unregister, getItemsFromAccount }
 )(Account);

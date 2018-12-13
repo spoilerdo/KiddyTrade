@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'lodash';
 
-import './OfferStyle.css';
+import './ListStyle.css';
 import skin from 'img/ak47.png';
 
 class OfferList extends Component {
@@ -13,14 +13,14 @@ class OfferList extends Component {
         console.log(offers);
 
         if(Object.keys(offers).length === 0){
-            return <h2>No item found</h2>;
+            return <h2>No offers found</h2>;
         }
 
         return _.map(offers, offer => {
             return (
                 <div 
                     key={offer.offerId}
-                    className="offer-container"
+                    className="list-container"
                 >
                     <div className="skin-image-container">
                         <img src={skin} />

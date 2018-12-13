@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { apiCall } from '../services/api';
 
-import { MARKETSERVER, GET_ALL_OFFERS, GET_OFFER, OFFER, GET_ACCOUNT_OFFERS, ACCOUNT } from './types';
+import { MARKETSERVER, GET_ALL_OFFERS, GET_OFFER, OFFER, ACCEPT_OFFER } from './types';
 
 //Actions
 export const getOffers = () => {
@@ -38,16 +38,14 @@ export const getOffer = (offerId) => {
     }
 }
 
-export const getOffersFromAccount = (accountId) => {
+export const buyOffer = (buyData) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall('get', `${MARKETSERVER}${ACCOUNT}/offers/${accountId}`)
-                .then((req) => {
-                    console.log(req);
-
+            return apiCall('post', `${MARKETSERVER}${OFFER}/accept`, buyData)
+                .then(() => {
                     dispatch({
-                        type: GET_ACCOUNT_OFFERS,
-                        payload: req,
+                        type: ACCEPT_OFFER,
+                        payload: buyData,
                     })
 
                     resolve();
@@ -59,7 +57,6 @@ export const getOffersFromAccount = (accountId) => {
 
 //Reducers
 const DEFAULT_STATE = {
-    ownedOffers: {},
     offers: {},
     items: {},
 }
@@ -68,7 +65,6 @@ export default (state = DEFAULT_STATE, action) => {
     switch (action.type){
         case GET_ALL_OFFERS:
             return {
-                ownedOffers: state.ownedOffers,
                 offers: _.extend({}, state.offers, _.mapKeys(action.payload, "offerId")),
                 items: state.items,
             };
@@ -76,15 +72,13 @@ export default (state = DEFAULT_STATE, action) => {
             const offer = action.payload.offer;
             const item = action.payload.item;
             return {
-                ownedOffers: state.ownedOffers,
                 offers: _.extend({}, state.offers, { [offer.offerId]:offer }),
                 items: _.extend({}, state.items, {[offer.itemId]:item }),
-            };
-        case GET_ACCOUNT_OFFERS:
-            const offers = action.payload;
+            };      
+        case ACCEPT_OFFER:
+            const soldOffer = action.payload.offer;
             return {
-                ownedOffers: _.extend({}, state.ownedOffers, _.mapKeys(offers, "offerId")),
-                offers: state.offers,
+                offers: _.filter(state, offer => offer.offerId !== soldOffer.offerId),
                 items: state.items,
             };
         default:

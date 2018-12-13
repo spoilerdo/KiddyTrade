@@ -5,6 +5,8 @@
 }
 .notification {
     background-color: #FCFCFC;
+    cursor: -webkit-grab;
+    cursor: grab;
 }
 .notification > p {
     color: #0A0A0A !important;
