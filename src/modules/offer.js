@@ -38,23 +38,6 @@ export const getOffer = (offerId) => {
     }
 }
 
-export const buyOffer = (buyData) => {
-    return dispatch => {
-        return new Promise((resolve, reject) => {
-            return apiCall('post', `${MARKETSERVER}${OFFER}/accept`, buyData)
-                .then(() => {
-                    dispatch({
-                        type: ACCEPT_OFFER,
-                        payload: buyData,
-                    })
-
-                    resolve();
-                })
-                .catch(e => { reject(); });
-        });
-    }
-}
-
 //Reducers
 const DEFAULT_STATE = {
     offers: {},

@@ -1,0 +1,20 @@
+.modal-container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal {
+    width: 35vw;
+    height: 38vh;
+    padding: 2%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.h-55 {
+    height: 55vh;
+}

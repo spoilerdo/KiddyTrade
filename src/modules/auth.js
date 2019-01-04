@@ -2,16 +2,21 @@ import {setTokenHeader} from '../services/api';
 import { apiCall } from '../services/api';
 import jwtDecode from 'jwt-decode';
 
-import {MARKETSERVER, LOGIN, REGISTER, UNREGISTER, ACCOUNT } from './types';
+import {MARKETSERVER, LOGIN, REGISTER, ACCOUNT, LOGOUT } from './types';
 
 //Actions
 export const setAuthorizationToken = (token) => {
     setTokenHeader(token);
 }
 
-export const logout = () => {
-    localStorage.clear();
-    setAuthorizationToken(false); //clears the axios default headers fot auth
+export const unlogin = () => {
+    return dispatch => {
+        localStorage.clear();
+        setAuthorizationToken(false); //clears the axios default headers fot auth
+        dispatch({
+            type: LOGOUT,
+        })
+    }
 }
 
 export const register = (accountData) => {
@@ -78,6 +83,13 @@ export default (state = DEFAULT_STATE, action) => {
                 user: action.payload,
                 userId: jwtDecode(localStorage.jwtToken)["userID"],
             };
+        case LOGOUT:
+            console.log("change default state");
+            return {
+                isAuthenticated: false,
+                user: "",
+                userId: "",
+            }
         default:
             return state;
     }

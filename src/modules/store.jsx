@@ -5,12 +5,14 @@ import authReducer from './auth';
 import offerReducer from './offer';
 import inventoryReducer from './inventory';
 import notificationReducer from './notification';
+import accountReducer from './account';
 
 const rootReducer = combineReducers({
     auth: authReducer,
     offers: offerReducer,
     inventory: inventoryReducer,
     notifications: notificationReducer,
+    buytokens: accountReducer,
 });
 
 const store = createStore(

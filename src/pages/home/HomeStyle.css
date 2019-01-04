@@ -23,7 +23,7 @@
 }
 .search-container > form > input:focus {
     background-color: transparent;
-    border-color: #FF652F;
+    border-color: #FDAF05;
     outline: none;
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
