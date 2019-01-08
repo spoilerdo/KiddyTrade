@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import theme from './modules/theme';
+import theme from './modules/utils/theme';
 
-import store from './modules/store';
+import store from './modules/utils/store';
 import Main from './pages/main';
 import { setAuthorizationToken } from './modules/auth';
-import { LOGIN } from './modules/types';
+import { LOGIN } from './modules/utils/types';
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -37,8 +37,8 @@ ReactDOM.render(
     <Router>
       <div>
         <MuiThemeProvider theme={theme}>
-          <CssBaseline/>
-          <Main/>
+            <CssBaseline/>
+            <Main/>
         </MuiThemeProvider>
       </div>
     </Router>

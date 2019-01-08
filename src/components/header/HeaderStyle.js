@@ -71,6 +71,9 @@ const styles = theme => ({
     loginBtn: {
       marginLeft: 10,
     },
+    close: {
+      padding: theme.spacing.unit / 2,
+    },
   });
 
 export default styles;

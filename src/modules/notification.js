@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { apiCall } from '../services/api';
 
-import { MARKETSERVER, GET_NEW, ACCOUNT, OFFER, UPDATE_NEW } from './types';
+import { MARKETSERVER, GET_NEW, ACCOUNT, OFFER, UPDATE_NEW } from './utils/types';
 
 //Actions
 export const getNewNotifications = (accountId) => {

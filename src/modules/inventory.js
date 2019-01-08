@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { apiCall } from '../services/api';
 
-import { MARKETSERVER, INVENTORYSERVER, OFFER, GET_ACCOUNT_OFFERS, ACCOUNT, CREATE_OFFER, INVENTORY, GET_ACCOUNT_ITEMS } from './types';
+import { MARKETSERVER, INVENTORYSERVER, OFFER, GET_ACCOUNT_OFFERS, ACCOUNT, CREATE_OFFER, INVENTORY, GET_ACCOUNT_ITEMS } from './utils/types';
 
 //Actions
 export const getOffersFromAccount = (accountId) => {
@@ -29,10 +29,10 @@ export const createOffer = (offer) => {
         return new Promise((resolve, reject) =>{
             return apiCall('post', `${MARKETSERVER}${OFFER}`, offer)
                 .then((req) => {
-                    /*dispatch({
+                    dispatch({
                         type: CREATE_OFFER,
                         payload: req,
-                    })*/
+                    })
                     resolve();
                 })
                 .catch(e => { reject(); });
@@ -67,12 +67,13 @@ export default (state = DEFAULT_STATE, action) => {
         case GET_ACCOUNT_OFFERS:
             const offers = action.payload;
             return {
-                ownedOffers: _.extend({}, state.ownedOffers, _.mapKeys(offers, "offerId")),
+                ownedOffers: _.extend({}, state.ownedOffers, offers),
                 ownedItems: state.ownedItems,
             };
         case CREATE_OFFER:
+            const offer = action.payload;
             return {
-                ownedOffers: _.extend({}, state.ownedOffers, _.mapKeys(action.payload, "offerId")),
+                ownedOffers: _.extend({}, state.ownedOffers, offer),
                 ownedItems: state.ownedItems,
             };
         case GET_ACCOUNT_ITEMS:

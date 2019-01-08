@@ -2,7 +2,7 @@ import {setTokenHeader} from '../services/api';
 import { apiCall } from '../services/api';
 import jwtDecode from 'jwt-decode';
 
-import {MARKETSERVER, LOGIN, REGISTER, ACCOUNT, LOGOUT } from './types';
+import {MARKETSERVER, LOGIN, REGISTER, ACCOUNT, LOGOUT } from './utils/types';
 
 //Actions
 export const setAuthorizationToken = (token) => {

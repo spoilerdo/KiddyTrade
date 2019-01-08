@@ -24,15 +24,17 @@ class Detail extends Component {
     }
 
     handleClick = () => {
-        this.buyReference.wrappedInstance.handleOpen();
+        this.buyReference.wrappedInstance.handleOpen(this.props.user);
     }
 
     render() {
         const { offers, items, user, classes } = this.props;
 
-        if(Object.keys(offers).length === 0 && Object.keys(items).length === 0){
+        if(Object.keys(offers).length === 0 || Object.keys(items).length === 0 || !user){
             return <h2>No item selected</h2>;
         }
+
+        console.log(this.props.match.params.ID);
 
         const offer = offers[this.props.match.params.ID];
         const item = items[offer.itemId];
@@ -60,7 +62,7 @@ class Detail extends Component {
                         <Grid item xs={12} sm={6} className={classes.gridSpacing}>
                             <Paper className={classes.paper}>
                                 <Typography component="h2" variant="display2">
-                                    Pice details:
+                                    Price details:
                                 </Typography>
                                 <Typography variant="body1">
                                     Price: ${offer.price}
@@ -97,7 +99,7 @@ class Detail extends Component {
                         <Grid item xs={12} sm={6}>
                         </Grid>
                     </Grid>
-                    <Buy ref={instance => this.buyReference = instance} offer={offer}/>
+                    <Buy ref={instance => this.buyReference = instance} offer={offer} user={user}/>
                 <Footer/>
             </div>
         );

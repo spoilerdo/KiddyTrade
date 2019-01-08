@@ -17,10 +17,9 @@ import { withStyles } from '@material-ui/core/styles';
 import './ListItemStyle.css';
 
 class ItemListItem extends Component {
-    handleClick = (itemLength, offerLength) => {
+    handleClick = (itemLength, offerLength, offer) => {
         if(itemLength === offerLength){
-            console.log("nice");
-            window.location.href = `/detail/${this.props.offers[0].offerId}`
+            window.location.href = `/detail/${offer.offerId}`
         }else{
             console.log("sell it");
             if(typeof this.props.onClick === 'function') {
@@ -33,7 +32,7 @@ class ItemListItem extends Component {
 
         //check if there is a offer already created from this item
         //get amound of items it has of ID -> URL
-        const FilteredItems = _.filter(items, item => item.itemID == item.itemID);
+        const FilteredItems = _.filter(items, i => i.itemID == item.itemID);
 
         //get amound of offers it has with a itemID -> URL
         const FilteredOffers = _.filter(offers, offer => offer.itemId == item.itemID);
@@ -41,13 +40,20 @@ class ItemListItem extends Component {
         return (
             <Grid key={item.itemID} item xs className={classes.root}>
                 <Card>
-                    {FilteredItems.length !== FilteredOffers.length &&
+                    {FilteredItems.length !== FilteredOffers.length ?
                     <CardHeader
                         className={classes.cardHeader}
                         color="primary"
                         title="SET FOR SALE"
-                    />}
-                    <CardActionArea onClick={() => this.handleClick(FilteredItems.length, FilteredOffers.length)}>
+                    />
+                    :
+                    <CardHeader
+                        className={classes.cardHeader}
+                        color="primary"
+                        title="SEE OFFER"
+                    />
+                    }
+                    <CardActionArea onClick={() => this.handleClick(FilteredItems.length, FilteredOffers.length, FilteredOffers[0])}>
                         <CardMedia
                             component="img"
                             alt="skin"

@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import { apiCall } from '../services/api';
 
-import { MARKETSERVER, OFFER, ACCOUNT, ACCEPT_OFFER, GET_BUY_TOKENS } from './types';
+import { MARKETSERVER, OFFER, ACCOUNT, ACCEPT_OFFER, GET_BUY_TOKENS } from './utils/types';
 
 //Actions
 export const buyOffer = (buyData) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             return apiCall('post', `${MARKETSERVER}${OFFER}/accept`, buyData)
-                .then(() => {
+                .then(() => {                    
                     dispatch({
                         type: ACCEPT_OFFER,
                     })

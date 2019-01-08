@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import SockJsClient from 'react-stomp';
 
 import { unlogin } from '../../modules/auth';
 import { getBuyTokens } from '../../modules/account';
@@ -18,10 +19,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
+import CloseIcon from '@material-ui/icons/Close';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 
@@ -29,6 +31,8 @@ class Header extends Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
+    offer: {},
+    open: false,
   };
 
   handleProfileMenuOpen = event => {
@@ -55,6 +59,18 @@ class Header extends Component {
     }
   }
 
+  onMessage = (msg) => {
+    this.setState({
+      offer: msg.offer
+    }, () =>{
+      this.setState({open: true});
+    });
+  }
+
+  handleClose = () => {
+    this.setState({open: false});
+  }
+
   handleLogout = e => {
     e.preventDefault();
 
@@ -78,7 +94,7 @@ class Header extends Component {
   }
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl, mobileMoreAnchorEl, offer, open } = this.state;
     const { user, classes, notifications } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -147,7 +163,7 @@ class Header extends Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
                 >
-                  {notifications.length !== 0 ?
+                  {notifications.length !== 0 && typeof notifications !== 'undefined' ?
                     <Badge badgeContent={notifications.length} color="secondary">
                       <AccountCircle />
                     </Badge>
@@ -171,6 +187,36 @@ class Header extends Component {
         {renderMenu}
         {renderMobileMenu}
         <Login ref={instance => this.loginReference = instance}/>
+        {user.isAuthenticated &&
+          <SockJsClient url='http://localhost:8080/websocket' topics={[`/topic/${user.userId}/offers`]}
+            onMessage={(msg) => { this.onMessage(msg); }}
+            ref={ (client) => { this.clientRef = client }}
+          />
+        }
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">SOLD: {offer.offerName}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { apiCall } from '../services/api';
 
-import { MARKETSERVER, GET_ALL_OFFERS, GET_OFFER, OFFER, ACCEPT_OFFER } from './types';
+import { MARKETSERVER, GET_ALL_OFFERS, GET_OFFER, OFFER, ACCEPT_OFFER } from './utils/types';
 
 //Actions
 export const getOffers = () => {
@@ -48,7 +48,7 @@ export default (state = DEFAULT_STATE, action) => {
     switch (action.type){
         case GET_ALL_OFFERS:
             return {
-                offers: _.extend({}, state.offers, _.mapKeys(action.payload, "offerId")),
+                offers: _.extend({}, state.offers, action.payload),
                 items: state.items,
             };
         case GET_OFFER:
