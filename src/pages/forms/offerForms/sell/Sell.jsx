@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { createOffer } from '../../../../modules/inventory';
+import { getNewNotifications } from '../../../../modules/notification';
 
 import '../../FormStyle.css';
 
@@ -34,6 +35,7 @@ class Sell extends Component {
         e.preventDefault();
 
         this.props.createOffer(this.state).then(() => {
+            this.props.getNewNotifications(this.props.user.userId);
             this.handleClose();
         })
         .catch(() => {
@@ -95,7 +97,7 @@ class Sell extends Component {
 
 export default connect(
     null,
-    { createOffer },
+    { createOffer, getNewNotifications },
     null,
     { withRef: true }
 )(Sell);

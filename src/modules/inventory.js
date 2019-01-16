@@ -58,26 +58,23 @@ export const getItemsFromAccount = (accountId) => {
 
 //Reducers
 const DEFAULT_STATE = {
-    ownedOffers: {},
+    ownedOffers: [],
     ownedItems: [],
 }
 
 export default (state = DEFAULT_STATE, action) => {
     switch(action.type){
         case GET_ACCOUNT_OFFERS:
-            const offers = action.payload;
             return {
-                ownedOffers: _.extend({}, state.ownedOffers, offers),
+                ownedOffers: action.payload,
                 ownedItems: state.ownedItems,
             };
         case CREATE_OFFER:
-            const offer = action.payload;
             return {
-                ownedOffers: _.extend({}, state.ownedOffers, offer),
+                ownedOffers: _.concat([], state.ownedOffers, action.payload),
                 ownedItems: state.ownedItems,
             };
         case GET_ACCOUNT_ITEMS:
-            console.log(action.payload);
             return {
                 ownedOffers: state.ownedOffers,
                 ownedItems: action.payload,

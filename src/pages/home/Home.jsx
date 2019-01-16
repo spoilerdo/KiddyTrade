@@ -18,6 +18,16 @@ class Home extends Component {
     }
 
     render() {
+
+        /*                <div className="search-container">
+                    <form className="form-inline">
+                        <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-default btn-m" type="submit">
+                        <i className='material-icons search-btn'>search</i>
+                        </button>
+                    </form>
+                </div> */
+
         return(
             <div>
                 <Header />
@@ -46,14 +56,6 @@ class Home extends Component {
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="sr-only">Next</span>
                     </a>
-                </div>
-                <div className="search-container">
-                    <form className="form-inline">
-                        <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-default btn-m" type="submit">
-                        <i className='material-icons search-btn'>search</i>
-                        </button>
-                    </form>
                 </div>
                 <OfferList offers={this.props.offers} listTitle={"Offers you might like:"}/>
                 <Footer />

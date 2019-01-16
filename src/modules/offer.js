@@ -9,6 +9,8 @@ export const getOffers = () => {
         return new Promise((resolve, reject) => {
             return apiCall('get', `${MARKETSERVER}${OFFER}/all`)
                 .then((req) => {
+                    console.log(req);
+
                     dispatch({
                         type: GET_ALL_OFFERS,
                         payload: req,

@@ -42,7 +42,7 @@ class ItemList extends Component {
                     Inventory:
                 </Typography>
                 { grids }
-                <Sell ref={instance => this.sellReference = instance}/>
+                <Sell ref={instance => this.sellReference = instance} user={this.props.user}/>
             </div>
         );
     }
