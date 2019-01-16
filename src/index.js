@@ -1,21 +1,47 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from './modules/utils/theme';
+
+import store from './modules/utils/store';
+import Main from './pages/main';
+import { setAuthorizationToken } from './modules/auth';
+import { LOGIN } from './modules/utils/types';
 
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
+import { CssBaseline } from '@material-ui/core';
 
-import Home from 'pages/home/Home';
-import Login from 'pages/login/Login';
-import Detail from 'pages/overviewPages/detail/Detail';
-import Sell from 'pages/overviewPages/sell/Sell';
-import Account from 'pages/overviewPages/account/Account';
+if(localStorage.jwtToken) {
+  setAuthorizationToken(localStorage.jwtToken);
+  //prevent jwtToken tampering
+  try {
+      store.dispatch({
+          type: LOGIN,
+          payload: jwtDecode(localStorage.jwtToken)["sub"],
+      });
+  }
+  catch (e) {
+      store.dispatch({
+          type: LOGIN,
+          payload: "",
+      });
+  }
+}
 
-ReactDOM.render(<Router><Switch>
-  <Route exact path="/" component={Home}/>
-  <Route exact path="/Account" component={Account} />
-  <Route exact path="/Login" component={Login} />
-  <Route exact path="/Detail/:ID" component={Detail} />
-  <Route exact path="Sell/:ID" component={Sell} />
-  </Switch></Router>, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <div>
+        <MuiThemeProvider theme={theme}>
+            <CssBaseline/>
+            <Main/>
+        </MuiThemeProvider>
+      </div>
+    </Router>
+  </Provider>, document.getElementById('root'));
+
+serviceWorker.unregister();
